@@ -1,0 +1,8 @@
+* {
+    margin: 0;
+    scroll-behavior: smooth;
+  }
+
+body {
+    cursor: url("./Images/cursor2.png"), auto;
+  }
