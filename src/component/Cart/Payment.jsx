@@ -11,6 +11,7 @@ import CreditCardIcon from '@mui/icons-material/CreditCard';
 import EventIcon from '@mui/icons-material/Event';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import {createOrder, clearErrors} from '../../actions/OrderAction';
+import {server} from '../../index';
 import './Payment.css';
 const Payment = () => {
      const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
@@ -47,10 +48,9 @@ const Payment = () => {
           headers : {
             "Content-Type" : "application/json",
           },
-          withCredentials : true,
         };
 
-        const { data } = await axios.post("/api/v1/payment/process", paymentData, config);
+        const { data } = await axios.post(`${server}/api/v1/payment/process`, paymentData, config);
 
         const client_secret = data.client_secret;
 
