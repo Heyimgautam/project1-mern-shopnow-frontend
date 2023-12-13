@@ -1,18 +1,18 @@
 import React,{Fragment,useEffect,useState} from 'react';
-import {Navigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import Metadata from '../layout/Metadata';
 import Loader from "../layout/loader/loader";
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import LockIcon from '@mui/icons-material/Lock';
 import { UPDATE_PASSWORD_RESET } from '../../constant/constant';
-import { useAlert } from 'react-alert';
+import toast from "react-hot-toast";
 import { updatePassword, clearErrors } from '../../actions/UserActions';
 import { useDispatch, useSelector } from 'react-redux';
 import './UpdatePassword.css';
 const UpdatePassword = () => {
-    const alert = useAlert();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const {isUpdated, error, loading} = useSelector((state)=> state.profile);
 
     const [oldPassword, setOldPassword] = useState("");
@@ -33,22 +33,19 @@ const UpdatePassword = () => {
 
     useEffect(()=>{
         if (error) {
-            alert.error(error);
+            toast.error(error);
             dispatch(clearErrors());
           }
       
           if (isUpdated) {
-            alert.success("Password Updated Successfully");
-      
+            toast.success("Password Updated Successfully");
+              navigate("/account");
             dispatch({
               type: UPDATE_PASSWORD_RESET,
             });
           }
-    },[dispatch, isUpdated, error, alert]);
+    },[dispatch, isUpdated,navigate, error]);
 
-    if(isUpdated){
-        return <Navigate to = {"/account"} />
-    }
   return (
     <Fragment>
         {loading ? (<Loader/>) : (<Fragment>

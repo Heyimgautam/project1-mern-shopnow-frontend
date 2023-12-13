@@ -2,6 +2,7 @@ import {React,useEffect,useState} from 'react';
 import "./app.css";
 import axios from 'axios';
 import {BrowserRouter as Router,Routes,Route} from 'react-router-dom';
+import  { Toaster } from "react-hot-toast";
 import webFont from 'webfontloader';
 import Header from './component/layout/header/Header';
 import UserOptions from './component/layout/header/UserOptions.jsx';
@@ -113,6 +114,7 @@ useEffect(()=>{
       </Routes>
       <Footer/>
     </Router>
+    <Toaster/>
     </Elements>)}
     </>
   );

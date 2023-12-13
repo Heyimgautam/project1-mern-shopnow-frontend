@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import { useAlert } from "react-alert";
 import Metadata from '../layout/Metadata';
 import Loader from '../layout/loader/loader';
 import Sidebar from './Sidebar';
@@ -8,13 +7,13 @@ import { Button } from '@mui/material';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import PersonIcon from '@mui/icons-material/Person';
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
+import toast from 'react-hot-toast';
 import { updateUser, getUserDetails,clearErrors } from '../../actions/UserActions';
 import { useNavigate, useParams } from 'react-router-dom';
 import { UPDATE_USER_RESET } from '../../constant/constant';
 
 const UpdateUser = () => {
     const dispatch = useDispatch();
-    const alert = useAlert();
     const navigate = useNavigate();
     const {id} = useParams();
 
@@ -34,21 +33,21 @@ const UpdateUser = () => {
           setRole(user.role);
         }
         if (error) {
-          alert.error(error);
+          toast.error(error);
           dispatch(clearErrors());
         }
     
         if (updateError) {
-          alert.error(updateError);
+          toast.error(updateError);
           dispatch(clearErrors());
         }
     
         if (isUpdated) {
-          alert.success("User Updated Successfully");
+          toast.success("User Updated Successfully");
           navigate("/admin/users");
           dispatch({ type: UPDATE_USER_RESET });
         }
-      }, [dispatch, alert, error, navigate, isUpdated, updateError, user, id]);
+      }, [dispatch,  error, navigate, isUpdated, updateError, user, id]);
 
       const updateUserSubmitHandler = (e) => {
         e.preventDefault();

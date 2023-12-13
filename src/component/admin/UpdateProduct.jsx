@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import Metadata from '../layout/Metadata';
-import { useAlert } from 'react-alert';
+import toast from "react-hot-toast";
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate, useParams} from 'react-router-dom';
 import { updateProduct, clearErrors, getProductDetails} from '../../actions/ProductAction';
@@ -14,7 +14,6 @@ import Slidebar from './Sidebar';
 import { UPDATE_PRODUCT_RESET } from '../../constant/constant';
 const UpdateProduct = () => {
     const dispatch = useDispatch();
-    const alert = useAlert();
     const navigate = useNavigate();
     const {id} = useParams();
 
@@ -90,23 +89,22 @@ const UpdateProduct = () => {
       setOldImages(product.images);
     }
     if (error) {
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors());
     }
 
     if (productError) {
-      alert.error(productError);
+      toast.error(productError);
       dispatch(clearErrors());
     }
 
     if (isUpdated) {
-      alert.success("Product Updated Successfully");
+      toast.success("Product Updated Successfully");
       navigate("/admin/products");
       dispatch({ type: UPDATE_PRODUCT_RESET });
     }
   }, [
     dispatch,
-    alert,
     error,
     navigate,
     isUpdated,

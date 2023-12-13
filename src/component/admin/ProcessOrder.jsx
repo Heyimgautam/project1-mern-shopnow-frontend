@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import {useSelector, useDispatch} from 'react-redux';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import {useAlert} from 'react-alert';
+import toast from "react-hot-toast";
 import { updateOrder, orderDetailsAction, clearErrors } from '../../actions/OrderAction';
 import { Button } from '@mui/material';
 import { UPDATE_ORDER_RESET } from '../../constant/constant';
@@ -14,7 +14,6 @@ import "./ProcessOrder.css";
 
 const ProcessOrder = () => {
     const dispatch = useDispatch();
-    const alert = useAlert();
     const navigate = useNavigate();
     const {id} = useParams();
     const {order, error, loading} = useSelector((state)=> state.orderDetail);
@@ -34,21 +33,21 @@ const ProcessOrder = () => {
 
       useEffect(() => {
         if (error) {
-          alert.error(error);
+          toast.error(error);
           dispatch(clearErrors());
         }
         if (updateError) {
-          alert.error(updateError);
+          toast.error(updateError);
           dispatch(clearErrors());
         }
         if (isUpdated) {
-          alert.success("Order Updated Successfully");
+          toast.success("Order Updated Successfully");
           navigate('/admin/orders');
           dispatch({ type: UPDATE_ORDER_RESET });
         }
     
         dispatch(orderDetailsAction(id));
-      }, [dispatch, alert, error, id, isUpdated, navigate,updateError]);
+      }, [dispatch,  error, id, isUpdated, navigate,updateError]);
     
   return (
     <Fragment>

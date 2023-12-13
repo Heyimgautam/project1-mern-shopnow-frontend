@@ -1,8 +1,8 @@
 import React, { Fragment, useEffect, useState } from "react";
 import Metadata from "../layout/Metadata";
 import Loader from "../layout/loader/loader";
+import toast from 'react-hot-toast';
 import Carousel from "react-material-ui-carousel";
-import { useAlert } from "react-alert";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -23,7 +23,6 @@ import {
 } from "@mui/material";
 import { NEW_REVIEW_RESET } from "../../constant/constant";
 const ProductDetails = () => {
-  const alert = useAlert();
   const { id } = useParams();
   const dispatch = useDispatch();
  
@@ -32,7 +31,6 @@ const ProductDetails = () => {
     (state) => state.productDetails
   );
   const {
-    loading: reviewLoading,
     success,
     error: reviewError,
   } = useSelector((state) => state.review);
@@ -58,9 +56,7 @@ const ProductDetails = () => {
 
   const addToCartHandler = () => {
     dispatch(addItemsToCart(id, quantity));
-    //setAlertContent("Product is Added to the Aart");
-    //setAlert(true);
-    alert.success("Added to Cart");
+    toast.success("Added to Cart");
   };
 
   const submitReviewToggle = () => {
@@ -85,19 +81,19 @@ const ProductDetails = () => {
 
   useEffect(() => {
     if (error) {
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors());
     }
     if (reviewError) {
-      alert.error(reviewError);
+      toast.error(reviewError);
       dispatch(clearErrors());
     }
     if (success) {
-      alert.success("Review Submitted Successfully");
+      toast.success("Review Submitted Successfully");
       dispatch({ type: NEW_REVIEW_RESET });
     }
     dispatch(getProductDetails(id));
-  }, [dispatch, id, error, alert, success, reviewError]);
+  }, [dispatch, id, error,  success, reviewError]);
   return (
     <Fragment>
       {loading ? (

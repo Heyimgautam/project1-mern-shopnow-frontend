@@ -3,7 +3,7 @@ import Metadata from '../layout/Metadata';
 import CheckOutSteps from './CheckOutSteps';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import {useAlert} from 'react-alert';
+import toast from "react-hot-toast";
 import { useDispatch, useSelector } from 'react-redux';
 import Typography from '@mui/material/Typography';
 import { CardNumberElement, CardCvcElement, CardExpiryElement, useStripe, useElements } from '@stripe/react-stripe-js';
@@ -16,7 +16,6 @@ const Payment = () => {
      const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
 
      const dispatch = useDispatch();
-     const alert = useAlert();
      const navigate = useNavigate();
      const stripe = useStripe();
      const elements = useElements();
@@ -48,6 +47,7 @@ const Payment = () => {
           headers : {
             "Content-Type" : "application/json",
           },
+          withCredentials : true,
         };
 
         const { data } = await axios.post("/api/v1/payment/process", paymentData, config);
@@ -74,7 +74,7 @@ const Payment = () => {
         if (result.error) {
           payBtn.current.disabled = false;
   
-          alert.error(result.error.message);
+          toast.error(result.error.message);
         } else {
           if (result.paymentIntent.status === "succeeded") {
             order.paymentInfo = {
@@ -86,21 +86,21 @@ const Payment = () => {
   
             navigate("/success");
           } else {
-            alert.error("There's some issue while processing payment ");
+            toast.error("There's some issue while processing payment ");
           } }
       }catch (error) {
         payBtn.current.disabled = false;
-        alert.error(error.response.data.message);
+        toast.error(error.response.data.message);
       }
 
   }
 
   useEffect(()=>{
      if(error){
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors());
      }
-  },[dispatch, error, alert]);
+  },[dispatch, error]);
   return (
     <Fragment>
       <Metadata title="Payment" />

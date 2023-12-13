@@ -5,22 +5,21 @@ import { orderDetailsAction, clearErrors } from '../../actions/OrderAction';
 import { useDispatch, useSelector } from 'react-redux';
 import Typography from '@mui/material/Typography';
 import { useParams,Link } from 'react-router-dom';
-import {useAlert} from 'react-alert';
+import toast from "react-hot-toast";
 import './OrderDetails.css';
 
 const OrderDetails = () => {
      const dispatch = useDispatch();
-     const alert = useAlert();
      const {id} = useParams();
      const {order, error, loading} = useSelector((state)=> state.orderDetail);
 
      useEffect(()=>{
         if(error){
-            alert.error(error);
+            toast.error(error);
             dispatch(clearErrors());
         }
         dispatch(orderDetailsAction(id));
-     },[dispatch, error, alert, id]);
+     },[dispatch, error,  id]);
   return (
     <Fragment>
       {loading ? (<Loader/>) : ( <Fragment>

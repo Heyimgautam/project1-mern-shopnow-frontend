@@ -1,9 +1,9 @@
 import React,{Fragment,useState,useEffect} from 'react';
-import {Navigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import Loader from '../layout/loader/loader';
 import Metadata from '../layout/Metadata';
 import { UPDATE_PROFILE_RESET } from '../../constant/constant';
-import {useAlert} from 'react-alert';
+import toast from "react-hot-toast";
 import PersonIcon from "@mui/icons-material/Person";
 import {MailOutlined} from '@mui/icons-material';
 import {updateProfile, loadUser, clearErrors} from '../../actions/UserActions';
@@ -11,8 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import "./UpdateProfile.css";
 const UpdateProfile = () => {
     const dispatch = useDispatch();
-    const alert = useAlert();
-
+    const navigate = useNavigate();
     const {user} = useSelector(state => state.login);
     const {isUpdated, loading , error} = useSelector((state)=> state.profile);
     const [name, setName] = useState("");
@@ -52,22 +51,20 @@ const UpdateProfile = () => {
         }
     
         if (error) {
-          alert.error(error);
+          toast.error(error);
           dispatch(clearErrors());
         }
     
         if (isUpdated) {
-          alert.success("Profile Updated Successfully");
+          toast.success("Profile Updated Successfully");
           dispatch(loadUser());
+          navigate("/");
           dispatch({
             type: UPDATE_PROFILE_RESET,
           });
         }
-      }, [dispatch, error, alert, user,isUpdated]);
+      }, [dispatch, error, navigate, user,isUpdated]);
 
-      if(isUpdated){
-        return <Navigate to = {"/"}/>
-      }
   return (
     <Fragment>
         {loading ? (<Loader/>) : (<Fragment>

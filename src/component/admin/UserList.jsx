@@ -4,16 +4,15 @@ import Metadata from '../layout/Metadata';
 import { DataGrid } from '@mui/x-data-grid';
 import {useSelector, useDispatch} from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import {useAlert} from 'react-alert';
 import { getAllUsers, deleteUser, clearErrors } from '../../actions/UserActions';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import toast from 'react-hot-toast';
 import { Button } from '@mui/material';
 import { DELETE_USER_RESET } from '../../constant/constant';
 
 const UserList = () => {
     const dispatch = useDispatch();
-    const alert = useAlert();
     const navigate = useNavigate();
     const {users, error} = useSelector((state)=> state.allUsers);
 
@@ -27,23 +26,23 @@ const UserList = () => {
 
     useEffect(() => {
         if (error) {
-          alert.error(error);
+          toast.error(error);
           dispatch(clearErrors());
         }
     
         if (deleteError) {
-          alert.error(deleteError);
+          toast.error(deleteError);
           dispatch(clearErrors());
         }
     
         if (isDeleted) {
-          alert.success(message);
+          toast.success(message);
           navigate("/admin/users");
           dispatch({ type: DELETE_USER_RESET });
         }
     
         dispatch(getAllUsers());
-      }, [dispatch, alert, error, deleteError, navigate, isDeleted, message]);
+      }, [dispatch,  error, deleteError, navigate, isDeleted, message]);
 
 
       const columns = [

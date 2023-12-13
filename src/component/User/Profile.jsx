@@ -2,15 +2,13 @@ import React, { Fragment } from 'react';
 import Metadata from '../layout/Metadata';
 import Loader from '../layout/loader/loader';
 import {useSelector} from 'react-redux';
-import {Link,Navigate} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import "./UserProfile.css";
 const Profile = () => {
-    const {user, loading, isAuthenticated} = useSelector((state)=> state.login);
-    // if(isAuthenticated === false){
-    //   return <Navigate to = {'/login'}/>
-    // }
+    const {user, loading} = useSelector((state)=> state.login);
   return (
     <Fragment>
+        {loading ? (<Loader/>):(<Fragment>
      <Metadata title = "User Profile -- Shop Now"/>
       <div className='profileContainer'>
         <div >
@@ -40,6 +38,7 @@ const Profile = () => {
             </div>
         </div>
       </div>
+    </Fragment>)}
     </Fragment>
   )
 }

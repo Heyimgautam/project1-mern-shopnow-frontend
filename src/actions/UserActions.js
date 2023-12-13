@@ -48,7 +48,7 @@ export const loginUser = (email, password) => async (dispatch) => {
       { email, password },
       {
         headers: {
-          "Content-type": "application/json",
+          "Content-Type": "application/json",
         },
         withCredentials : true,
       }

@@ -13,21 +13,6 @@ const Register = () => {
     const dispatch = useDispatch();
     const {loading, error, isAuthenticated} = useSelector((state)=> state.login);
 
-    // const [name, setName] = useState('');
-    // const [email, setEmail] = useState('');
-    // const [password, setPassword] = useState('');
-    // const [avatar, setAvatar] = useState('/Profile.png');
-
-    // const registerHandler = (e)=>{
-    //     e.preventDefault();
-    //     const myForm = new FormData();
-
-    // myForm.append("name", name);
-    // myForm.append("email", email);
-    // myForm.append("password", password);
-    // myForm.append("avatar", avatar);
-    // dispatch(registerUser(myForm));
-    // }
     const [user,setUser] = useState({
         name : "",
         email : "",

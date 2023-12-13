@@ -5,11 +5,10 @@ import Loader from '../layout/loader/loader';
 import "./Products.css";
 import Pagination from 'react-js-pagination';
 import Slider from '@mui/material/Slider';
-
+import toast from 'react-hot-toast';
 import Typography from '@mui/material/Typography';
 import {getProduct,clearErrors} from '../../actions/ProductAction';
 import {useDispatch,useSelector} from 'react-redux';
-import {useAlert} from 'react-alert';
 import {useParams} from 'react-router-dom';
 
 const categories = [
@@ -22,7 +21,6 @@ const categories = [
 ];
 const Products = () => {
   const dispatch = useDispatch();
-  const alert = useAlert();
   const {keyword} = useParams();
   const {products,loading,error,resultPerPage,productsCount,filteredProductsCount} = useSelector(state=> state.products);
   const [currentPage,setCurrentPage] = useState(1);
@@ -44,11 +42,11 @@ const Products = () => {
    let count = filteredProductsCount;
 useEffect(()=>{
   if(error){
-    alert.error(error);
+    toast.error(error);
     dispatch(clearErrors());
   }
   dispatch(getProduct(keyword,currentPage,price,category,ratings));
-},[dispatch,error,alert,keyword,currentPage,price,category,ratings]);
+},[dispatch,error,keyword,currentPage,price,category,ratings]);
   return (
     <Fragment>
       {loading ? (<Loader/>):(

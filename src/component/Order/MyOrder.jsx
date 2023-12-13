@@ -3,7 +3,7 @@ import Metadata from '../layout/Metadata';
 import Loader from '../layout/loader/loader';
 import {myOrders, clearErrors} from '../../actions/OrderAction';
 import { useDispatch, useSelector } from 'react-redux';
-import { useAlert } from 'react-alert';
+import toast from "react-hot-toast";
 import { Link } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined';
@@ -11,7 +11,6 @@ import { DataGrid } from '@mui/x-data-grid';
 import "./MyOrder.css";
 
 const MyOrder = () => {
-  const alert = useAlert();
   const dispatch = useDispatch();
   const {user} = useSelector((state)=> state.login);
   const {loading, Orders, error} = useSelector((state)=> state.MyOrder);
@@ -60,11 +59,11 @@ Orders.forEach((item, index)=> {
  const  userId = user._id;
 useEffect(()=>{
   if(error){
-    alert.error(error);
+    toast.error(error);
     dispatch(clearErrors());
   }
   dispatch(myOrders(userId));
-},[dispatch,error,alert,userId]);
+},[dispatch,error,userId]);
   return (
     <Fragment>
       <Metadata title = {`${user.name} - Orders`}/>

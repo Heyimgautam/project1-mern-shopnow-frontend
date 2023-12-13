@@ -4,7 +4,7 @@ import Metadata from '../layout/Metadata';
 import { DataGrid } from '@mui/x-data-grid';
 import { useNavigate } from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
-import {useAlert} from 'react-alert';
+import toast from "react-hot-toast";
 import { Button } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import StarOutlineIcon from '@mui/icons-material/StarOutline';
@@ -13,7 +13,6 @@ import { DELETE_REVIEW_RESET } from '../../constant/constant';
 import "./ProductReviews.css";
 const ProductReviews = () => {
     const dispatch = useDispatch();
-      const alert = useAlert();
       const navigate = useNavigate();
       const {error, reviews, loading} = useSelector((state)=> state.allReviews);
       const { error: deleteError, isDeleted } = useSelector(
@@ -36,21 +35,21 @@ const ProductReviews = () => {
     //   dispatch(getAllReviews(productId));
     // }
     if (error) {
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors());
     }
 
     if (deleteError) {
-      alert.error(deleteError);
+      toast.error(deleteError);
       dispatch(clearErrors());
     }
 
     if (isDeleted) {
-      alert.success("Review Deleted Successfully");
+      toast.success("Review Deleted Successfully");
       navigate("/admin/reviews");
       dispatch({ type: DELETE_REVIEW_RESET });
     }
-  }, [dispatch, alert, error, deleteError, navigate, isDeleted]);
+  }, [dispatch, error, deleteError, navigate, isDeleted]);
 
   
   const columns = [

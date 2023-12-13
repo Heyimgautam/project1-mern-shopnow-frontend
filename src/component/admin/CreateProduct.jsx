@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect,useState } from 'react';
 import Metadata from '../layout/Metadata';
-import { useAlert } from 'react-alert';
+import toast from "react-hot-toast";
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
 import { createProduct, clearErrors } from '../../actions/ProductAction';
@@ -16,7 +16,6 @@ import './CreateProduct.css';
 
 const CreateProduct = () => {
     const dispatch = useDispatch();
-    const alert = useAlert();
     const navigate = useNavigate();
 
     const {loading, error, success} = useSelector((state)=> state.newProduct);
@@ -40,15 +39,15 @@ const CreateProduct = () => {
 
   useEffect(()=>{
     if(error){
-        alert.error(error);
+        toast.error(error);
         dispatch(clearErrors());
     }
     if(success){
-        alert.success("Product Created Successfully");
+        toast.success("Product Created Successfully");
         navigate("/admin/dashboard");
         dispatch({type : NEW_PRODUCT_RESET});
     }
-  },[dispatch, error, alert, success, navigate]);
+  },[dispatch, error,  success, navigate]);
 
   const createProductSubmitHandler = (e)=>{
     e.preventDefault();

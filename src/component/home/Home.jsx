@@ -6,29 +6,26 @@ import Metadata from '../layout/Metadata';
 import {getProduct,clearErrors} from '../../actions/ProductAction';
 import Loader from '../layout/loader/loader.jsx';
 import { useDispatch,useSelector } from 'react-redux';
-import {useAlert} from 'react-alert';
-import Logout from "../User/Logout";
+import toast from "react-hot-toast";
 
 
 
 const Home = () => {
-  const alert = useAlert();
   const dispatch = useDispatch();
   const {products, loading ,error} = useSelector(state=> state.products)
   useEffect(()=>{
      if(error){
-      alert.error(error);
+      toast.error(error);
       dispatch(clearErrors());
      }
     dispatch(getProduct());
      
-  },[dispatch,error,alert]);
+  },[dispatch,error]);
   
   return (
     <Fragment>
       {loading ? (<Loader/>) : (<Fragment>
         <Metadata title = "Shop Now"/>
-        <Logout/>
         <div className = "banner">
          <p>Welcome to ShopNow</p>
          <h1>Find Amazing products Below</h1>

@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import {useSelector, useDispatch} from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import {useAlert} from 'react-alert';
+import toast from "react-hot-toast";
 import  Metadata from '../layout/Metadata';
 import Sidebar from './Sidebar';
 import { getAllProduct, deleteProduct, clearErrors } from '../../actions/ProductAction';
@@ -12,7 +12,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import './ProductList.css';
 const ProductList = () => {
      const dispatch = useDispatch();
-     const alert = useAlert();
      const navigate = useNavigate();
      const {products, error} = useSelector((state)=> state.products);
      const {isDeleted, error : deleteError} = useSelector((state)=> state.editProduct);
@@ -22,20 +21,20 @@ const ProductList = () => {
      };
      useEffect(()=>{
         if(error){
-            alert.error(error);
+            toast.error(error);
             dispatch(clearErrors());
         }
         if(deleteError){
-            alert.error(deleteError);
+            toast.error(deleteError);
             dispatch(clearErrors());
         }
         if(isDeleted){
-            alert.success("Product deleted successfully");
+            toast.success("Product deleted successfully");
             navigate("/admin/dashboard");
             dispatch({type : DELETE_PRODUCT_RESET});
         }
         dispatch(getAllProduct());
-     },[dispatch, error, alert, deleteError, isDeleted, navigate]);
+     },[dispatch, error,  deleteError, isDeleted, navigate]);
 
      const columns = [
         {field : "id", headerName: "Product ID", minWidth: 200, flex: 0.5},

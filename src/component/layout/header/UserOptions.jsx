@@ -1,6 +1,6 @@
 import React,{Fragment,useState} from 'react'
 import { useNavigate } from 'react-router-dom';
-import {useAlert} from 'react-alert';
+import toast from "react-hot-toast";
 import {useSelector} from 'react-redux';
 import { SpeedDial,SpeedDialAction,Backdrop } from '@mui/material';
 import DashboardRoundedIcon from '@mui/icons-material/DashboardRounded';
@@ -13,7 +13,6 @@ import {logout} from '../../../actions/UserActions';
 import './header.css';
 const UserOptions = ({user}) => {
   const navigate = useNavigate();
-  const alert = useAlert();
     const [open,setOpen] = useState(false);
     const {cartItems} = useSelector((state)=> state.cart);
     const dispatch = useDispatch();
@@ -40,7 +39,7 @@ const UserOptions = ({user}) => {
     }
     function logoutUser(){
         dispatch(logout());
-        alert.success("logout successfully");
+        toast.success("logout successfully");
         navigate("/");
     }
     function orders(){
