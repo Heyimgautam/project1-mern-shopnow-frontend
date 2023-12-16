@@ -1,7 +1,7 @@
 
 # Project Title
 
-Hello there! this is gautam, created this project to implement my skills. This project is purely based on MERN stack technology and name is SHOP NOW web app. It is integreated with multiple usecase like :- Ecommerce, Product Management System and Admin dashboard.  
+Hello there! this is gautam, created this project to implement my skills. This project is purely based on MERN stack technology and name is SHOP NOW web app. It is integrated with multiple usecases like :- Ecommerce, Product Management System and Admin dashboard.  
 
 
 ## Installation
